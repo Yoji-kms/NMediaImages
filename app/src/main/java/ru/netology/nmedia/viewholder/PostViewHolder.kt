@@ -24,7 +24,12 @@ class PostViewHolder(
             author.text = post.author
             published.text = Date(post.published * 1000).toFormattedString()
             content.text = post.content
-            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
+            val avatarUrl = "${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}"
+            avatar.loadCircleCrop(
+                avatarUrl,
+                R.drawable.ic_avatar_placeholder,
+                R.drawable.ic_avatar_not_found
+            )
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
 
