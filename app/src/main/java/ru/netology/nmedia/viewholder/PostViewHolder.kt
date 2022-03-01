@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewholder
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.BuildConfig
@@ -9,6 +10,7 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.listeners.OnInteractionListener
 import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.view.load
 import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.view.loadCircleCropPlaceholder
 import java.text.SimpleDateFormat
@@ -32,6 +34,21 @@ class PostViewHolder(
             )
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+
+            with(post.attachment) {
+                if (this != null) {
+                    attachment.apply {
+                        visibility = View.VISIBLE
+                        contentDescription = description
+                        val imageUrl = "${BuildConfig.BASE_URL}/images/$url"
+                        load(
+                            imageUrl,
+                            R.drawable.ic_attachment_placeholder,
+                            R.drawable.ic_attachment_not_found
+                        )
+                    }
+                } else attachment.visibility = View.GONE
+            }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
