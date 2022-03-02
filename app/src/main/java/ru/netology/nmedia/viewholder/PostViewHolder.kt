@@ -40,12 +40,13 @@ class PostViewHolder(
                     attachment.apply {
                         visibility = View.VISIBLE
                         contentDescription = description
-                        val imageUrl = "${BuildConfig.BASE_URL}/images/$url"
+                        val imageUrl = "${BuildConfig.BASE_URL}/media/$url"
                         load(
                             imageUrl,
                             R.drawable.ic_attachment_placeholder,
                             R.drawable.ic_attachment_not_found
                         )
+                        setOnClickListener { onInteractionListener.onPicture(post) }
                     }
                 } else attachment.visibility = View.GONE
             }
@@ -79,8 +80,8 @@ class PostViewHolder(
         }
     }
 
-    fun bindPlaceholder(){
-        binding.apply{
+    fun bindPlaceholder() {
+        binding.apply {
             author.text = "..."
             published.text = "..."
             content.text = "..."
