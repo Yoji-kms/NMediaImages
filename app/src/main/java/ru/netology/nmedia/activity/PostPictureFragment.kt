@@ -30,7 +30,7 @@ class PostPictureFragment : Fragment() {
         fragmentBinding = binding
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_postPictureFragment_to_feedFragment)
+            findNavController().navigateUp()
         }
 
         with(viewModel.getAttachment()!!) {

@@ -35,12 +35,5 @@
         android:name="ru.netology.nmedia.activity.PostPictureFragment"
         android:label="fragment_post_picture"
         tools:layout="@layout/fragment_post_picture">
-        <action
-            android:id="@+id/action_postPictureFragment_to_feedFragment"
-            app:destination="@id/feedFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>
