@@ -1,10 +1,12 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,6 +57,11 @@ class FeedFragment : Fragment() {
                 val shareIntent =
                     Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
+            }
+
+            override fun onPicture(post: Post) {
+                viewModel.setAttachment(post.attachment)
+                findNavController().navigate(R.id.action_feedFragment_to_postPictureFragment)
             }
         })
         binding.list.adapter = adapter

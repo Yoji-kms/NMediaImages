@@ -8,8 +8,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.db.AppDb
+import ru.netology.nmedia.dto.Attachment
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
@@ -31,7 +33,6 @@ private val empty = Post(
 private val noPhoto = PhotoModel()
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    // упрощённый вариант
     private val repository: PostRepository =
         PostRepositoryImpl(AppDb.getInstance(context = application).postDao())
 
@@ -49,6 +50,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             .catch { e -> e.printStackTrace() }
             .asLiveData()
     }
+
+    private val showingAttachment = MutableLiveData(Attachment("", "", AttachmentType.IMAGE))
 
     private val edited = MutableLiveData(empty)
     private val _postCreated = SingleLiveEvent<Unit>()
@@ -119,6 +122,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun changePhoto(uri: Uri?, file: File?) {
         _photo.value = PhotoModel(uri, file)
     }
+
+    fun setAttachment(attachment: Attachment?) {
+        showingAttachment.value = attachment
+    }
+
+    fun getAttachment(): Attachment? = showingAttachment.value
 
     fun likeById(id: Long) = viewModelScope.launch {
         try {
